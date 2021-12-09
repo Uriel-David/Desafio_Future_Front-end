@@ -2,6 +2,7 @@
     <div>
         <div class="flex-container">
             <div class="flex1" v-for="charRandom in characterRandom">
+                <h2>O personagem sortudo da vez é:</h2>
                 <h3>{{charRandom.name}}</h3>
                 <p>
                     {{charRandom.description}}
