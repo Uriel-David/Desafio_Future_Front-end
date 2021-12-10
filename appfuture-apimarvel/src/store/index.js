@@ -8,6 +8,7 @@ export default createStore({
     character: []
   },
   mutations: {
+    // Função para recuperar da API todos os personagens até 100 (máximo da API por página)
     getCharacters(state) {
       state.characters = []
       axios.get(`http://gateway.marvel.com/v1/public/characters?limit=100&apikey=${public_key}`)
@@ -21,6 +22,7 @@ export default createStore({
         })
     },
 
+    // Função para recuperar apenas 1 personagem da API
     getCharacter(state, id) {
       state.character = []
       axios.get(`http://gateway.marvel.com/v1/public/characters/${id}?apikey=${public_key}`)
@@ -35,6 +37,7 @@ export default createStore({
     }
   },
   actions: {
+    // Exporta as funções para serem usadas globalmente pelo app
     getCharacters: context => {
       context.commit('getCharacters')
     },

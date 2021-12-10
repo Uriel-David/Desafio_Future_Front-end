@@ -1,22 +1,35 @@
 <template lang="html">
-    <div>
+    <div class="body-template">
         <div class="flex-container">
             <div class="flex1" v-for="charRandom in characterRandom">
                 <h2>O personagem sortudo da vez é:</h2>
                 <h3>{{charRandom.name}}</h3>
-                <p>
-                    {{charRandom.description}}
-                </p>
+                <div v-if="charRandom.description && charRandom.description.length > 0">
+                    <p>
+                        {{charRandom.description}}
+                    </p>
+                </div>
+                <div v-else="charRandom.description && charRandom.description.length <= 0">
+                    <p>
+                        O personagem não possui nenhuma descrição na base de dados da API. Tanto pode ser por falha na API ou falta de informções em relação ao personagem em questão.
+                    </p>
+                </div>
             </div>
 
             <div class="flex2">
                 <img :src="url" alt="" class="char-img"/>
             </div>
-            <router-link to="/">
-                <button type="button" name="button" class="btn-back">Back</button>
-            </router-link>
         </div>
+        <router-link to="/">
+            <button type="button" name="button" class="btn-back">Back to Home</button>
+        </router-link>
     </div>
+    <footer class="footer">
+        <div>
+            <a href="https://br.freepik.com/fotos-vetores-gratis/fundo">Fundo vetor criado por freepik - br.freepik.com</a>
+            <a href="https://br.freepik.com/fotos-vetores-gratis/fundo">Fundo vetor criado por macrovector - br.freepik.com</a>
+        </div>
+    </footer>
 </template>
 
 <script>
@@ -43,6 +56,7 @@ export default {
         })
     },
     methods: {
+        // Função que recupera personagem de forma aleatório
         getRandomCharacter: function() {
             var characterId = this.characters[this.randomId].id
             axios.get(`http://gateway.marvel.com/v1/public/characters/${characterId}?apikey=${public_key}`)
@@ -61,11 +75,19 @@ export default {
 </script>
 
 <style lang="css">
+    .body-template {
+        background-image: url("../assets/background-body-template-site.png");
+        background-position: center;
+        background-repeat: repeat-y;
+    }
+
     .flex-container {
-        margin: 100px;
-        display: flex;
+        margin: 220px 80px 40px 80px;
+        display: inline-flex;
         align-items: center;
         justify-content: center;
+        background-color: whitesmoke;
+        border-radius: 20px;
     }
 
     .flex1 {
@@ -74,21 +96,34 @@ export default {
     }
 
     .flex2 {
+        margin: 10px;
         flex: 50%;
     }
 
     .char-img {
-        width: 30%;
         border-radius: 10px;
     }
 
     .btn-back {
-        width: 120px;
-        padding: 15px;
+        padding: 12px;
+        margin-top: 30px;
+        margin-bottom: 10px;
         border-radius: 25px;
-        background-color: transparent;
+        width: 120px;
+        background-color: white;
         font-size: 20px;
-        margin-bottom: 100px;
+        font-weight: bold;
         cursor: pointer;
+    }
+
+    .footer {
+        padding: 2px;
+        margin: 0px;
+        align-items: center;
+    }
+
+    .footer a {
+        color: black;
+        text-decoration: none;
     }
 </style>
